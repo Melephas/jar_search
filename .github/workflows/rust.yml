@@ -7,10 +7,8 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
+  linux-build:
+    runs-on: [ubuntu-latest]
     steps:
     - uses: actions/checkout@v2
     - name: Build
@@ -19,6 +17,19 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         # Artifact name
-        name: jar_search
+        name: jar_search-linux
         # Directory containing files to upload
         path: target/release/jar_search
+  windows-build:
+    runs-on: [windows-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: cargo build --release
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          # Artifact name
+          name: jar_search-windows
+          # Directory containing files to upload
+          path: target/release/jar_search.exe
